@@ -11,5 +11,3 @@ dependencies = [
     "pydantic",
     "beautifulsoup4",
 ]
-[tool.vercel]
-entrypoint = "chat:app"
