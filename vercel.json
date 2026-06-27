@@ -1,8 +1,13 @@
 {
-  "builds": [
-    { "src": "chat.py", "use": "@vercel/python" }
-  ],
+  "functions": {
+    "chat.py": {
+      "runtime": "python3.12"
+    }
+  },
   "routes": [
-    { "src": "/(.*)", "dest": "chat.py" }
+    {
+      "src": "/(.*)",
+      "dest": "chat.py"
+    }
   ]
 }
