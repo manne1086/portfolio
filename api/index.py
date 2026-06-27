@@ -4,8 +4,6 @@ from openai import OpenAI
 from fastapi import FastAPI
 from fastapi.middleware.cors import CORSMiddleware
 from pydantic import BaseModel
-import pathlib
-from bs4 import BeautifulSoup
 
 load_dotenv(override=True)
 
@@ -26,15 +24,6 @@ app.add_middleware(
     allow_methods=["*"],
     allow_headers=["*"],
 )
-
-# Strip HTML → clean text only
-html_content = (pathlib.Path(__file__).parent.parent / "public" / "index.html").read_text(encoding="utf-8")
-soup = BeautifulSoup(html_content, "html.parser")
-for tag in soup(["script", "style", "noscript", "meta", "link"]):
-    tag.decompose()
-
-clean_text = soup.get_text(separator="\n", strip=True)[:6000]  # 👈 truncate here
-print(f"Clean text length: {len(clean_text)} chars")
 
 system_prompt = """You are Rithvi's Portfolio Assistant — a friendly, knowledgeable AI chat agent embedded in the personal portfolio of Rithivkesh (goes by "Rithvi"), a final-year B.Tech Computer Science & IT student at GRIET, Hyderabad, with a GPA of 8.73.
 
@@ -78,7 +67,7 @@ Contact:
 ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 PORTFOLIO CONTENT (extracted from HTML)
 ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
-""" + clean_text
+"""
 
 
 class ChatRequest(BaseModel):
