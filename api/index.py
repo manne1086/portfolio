@@ -28,7 +28,7 @@ app.add_middleware(
 )
 
 # Strip HTML → clean text only
-html_content = pathlib.Path("index.html").read_text(encoding="utf-8")
+html_content = (pathlib.Path(__file__).parent.parent / "public" / "index.html").read_text(encoding="utf-8")
 soup = BeautifulSoup(html_content, "html.parser")
 for tag in soup(["script", "style", "noscript", "meta", "link"]):
     tag.decompose()
