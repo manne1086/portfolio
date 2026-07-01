@@ -4,7 +4,8 @@ from openai import OpenAI
 from fastapi import FastAPI
 from fastapi.middleware.cors import CORSMiddleware
 from pydantic import BaseModel
-
+from fastapi.staticfiles import StaticFiles
+from fastapi.responses import FileResponse
 load_dotenv(override=True)
 
 groq_api_key = os.getenv("GROQ_API_KEY")
@@ -102,4 +103,6 @@ async def chat(req: ChatRequest):
 
 @app.get("/")
 async def root():
-    return {"status": "Rithvi's Portfolio Assistant is live ⚓"}
+    return FileResponse("public/index.html")
+
+app.mount("/", StaticFiles(directory="public"), name="static")
