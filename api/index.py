@@ -103,6 +103,6 @@ async def chat(req: ChatRequest):
 
 @app.get("/")
 async def root():
-    return FileResponse("public/index.html")
+    return FileResponse(pathlib.Path(__file__).parent.parent / "public/index.html")
 
 app.mount("/", StaticFiles(directory="public"), name="static")
